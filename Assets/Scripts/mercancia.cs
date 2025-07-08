@@ -12,11 +12,9 @@ public class mercancia : MonoBehaviour
         moneyManager = FindObjectOfType<MoneyManager>();
     }
 
-    void OnCollisionEnter(Collision collision)
+    bool collisionWithPlayer(Collision collision)
     {
-        if (collision.gameObject.name == "player"){
-            moneyManager.UpdateMoney(cost);
-            Destroy(gameObject);
-        }
+        return collision.gameObject.name == "Player";
     }
+
 }
