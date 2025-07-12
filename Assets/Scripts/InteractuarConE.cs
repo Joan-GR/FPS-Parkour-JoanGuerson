@@ -4,47 +4,46 @@ using UnityEngine;
 using TMPro;
 
 public class InteractuarConE : MonoBehaviour
+
 {
-    public GameObject interactionMsg;
-    public mercancia mercancia;
+    public GameObject interactionMessage;
+    public mercancia Mercancia;
 
-    bool onInteraction = false;
-    GameObject gameObjectOfInteraction;
-
-    private void Start()
+    void Start()
     {
-        interactionMsg.SetActive(false);
+        interactionMessage.SetActive(false);
     }
 
-    private void Update()
+    void Update()
     {
-
-        interactionMsg.SetActive(onInteraction);
-        if (onInteraction && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            Destroy(gameObjectOfInteraction);
-            stopInteraction();
+            if (Mercancia)
+            {
+                Destroy(Mercancia.gameObject);
+                StopInteraction();
+            }
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter (Collider other)
     {
-        bool isInteractable = other.GetComponent<mercancia>();
-        if (isInteractable)
+        Debug.Log(other.gameObject.name);
+        Mercancia = other.GetComponent<mercancia>();
+        if (Mercancia)
         {
-            onInteraction = true;
-            gameObjectOfInteraction = other.gameObject;
+            interactionMessage.SetActive(true);
         }
-
     }
+
     private void OnTriggerExit(Collider other)
     {
-        stopInteraction();
+        StopInteraction();
     }
 
-    void stopInteraction()
+    void StopInteraction()
     {
-        onInteraction = false;
-        gameObjectOfInteraction = null;
+        interactionMessage.SetActive(false);
+        Mercancia = null;
     }
 }
